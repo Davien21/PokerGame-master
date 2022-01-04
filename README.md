@@ -1,13 +1,13 @@
 # A Poker Game Smart Contract
 
-Assumptions:
+### Assumptions:
 A. My Poker Game contract is single player, a Player vs the Dealer which is an automated opponent mapped to your address.
 
 Other Information:
-
-1. I built a Frontend to integrate with the smart contract.
+1. I built a Frontend to integrate with the smart contract so you can see the contract/integration working fine.
 2. The generatePlayerHand function is expensive to call so I plan to remove it and use chainlink keepers to call it from a server.
-3. I have removed a function named determineWinner which initially ran a bunch of algorithms to see what type of hand the player/dealer had and then determine the winner.
+3. The Frontend is interacting with the master branch, but the generatePlayerHand Function is in the ``generate-hand`` branch.
+4. I have removed a function named determineWinner which initially ran a bunch of algorithms to see what type of hand the player/dealer had and then determine the winner.
 
 Github Repos:
 Frontend / Game: https://github.com/davien21/poker
