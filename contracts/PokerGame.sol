@@ -69,37 +69,6 @@ contract PokerGame {
     );
   }
 
-  function generatePlayerHand() public {
-    Hand storage playerHand = playerCurrentHand[msg.sender];
-    playerHand.cards = cards;
-    uint256 number = 5;
-    for (uint256 i = 0; i < number; i++) {
-      uint256 DenominationIndex = uint256(
-        keccak256(
-          abi.encodePacked(block.difficulty, block.timestamp, i)
-        )
-      ) % 13;
-      uint256 SuitIndex = uint256(
-        keccak256(
-          abi.encodePacked(block.difficulty, block.timestamp, i)
-        )
-      ) % 4;
-      string memory card = string(
-        abi.encodePacked(
-          denominations[DenominationIndex],
-          suits[SuitIndex]
-        )
-      );
-
-      playerHand.cards.push(card);
-    }
-    playerCurrentHand[msg.sender].cards = playerHand.cards;
-    cards = [""];
-    cards.pop();
-
-    emit CardHand(playerHand.cards);
-  }
-
   function placeBet(uint256 _amount) public {
     require(_amount > 0, "Bet Amount cannot be 0");
     playerCurrentAmount[msg.sender] = playerCurrentAmount[msg.sender].sub(
@@ -114,7 +83,7 @@ contract PokerGame {
   function rewardWinner(string memory _winner) public {
     require(
       bidAmount[msg.sender] > 0,
-      "Bid amount Cannot be 0, Caller must first place a bid"
+      "Bid amount Cannot be 0, Caller must first place a bidplay a game"
     );
     if (
       (keccak256(abi.encodePacked(_winner)) ==
