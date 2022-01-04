@@ -69,6 +69,26 @@ contract PokerGame {
     );
   }
 
+   function generatePlayerHand() public  {
+        Hand storage playerHand = playerCurrentHand[msg.sender];
+        playerHand.cards = cards;
+        uint number = 5;
+        for(uint i = 0; i < number; i++) {
+            uint randomDenominationIndex = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, i))) % 13;   
+            uint randomSuitIndex = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, i))) % 4; 
+            string memory card = string(abi.encodePacked(denominations[randomDenominationIndex], suits[randomSuitIndex]));     
+            
+            
+            playerHand.cards.push(card);
+        }
+        playerCurrentHand[msg.sender].cards = playerHand.cards;
+        cards = [''];
+        cards.pop();
+
+        emit CardHand(playerHand.cards);
+    
+    }
+
   function placeBet(uint256 _amount) public {
     require(_amount > 0, "Bet Amount cannot be 0");
     playerCurrentAmount[msg.sender] = playerCurrentAmount[msg.sender].sub(
